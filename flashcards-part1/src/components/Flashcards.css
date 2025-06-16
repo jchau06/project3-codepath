@@ -1,15 +1,22 @@
 .flashcard-container {
   perspective: 1000px;
-  width: 300px;
-  height: 200px;
   margin: 0 auto;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 }
 
 .flashcard-body {
   width: 100%;
   height: 100%;
   position: relative;
+  width: 40rem;
+  height: 20rem;
+  /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25), 0 1.5px 6px rgba(0,0,0,0.18); */
 }
 
 .flashcard {
@@ -28,7 +35,7 @@
 }
 
 .flashcard.flipped {
-  transform: rotateY(180deg);
+  transform: rotateX(180deg);
 }
 
 .question-body, .answer-body {
@@ -47,6 +54,21 @@
 }
 
 .answer-body {
-  transform: rotateY(180deg);
-  background-color: #f0f8ff;
+  transform: rotateX(180deg);
+  background-color: white;
+}
+
+.flashcard-buttons {
+  margin: 1rem;
+}
+
+.flashcard-buttons button {
+  margin: 0.25rem;
+  padding: 0rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
 }
