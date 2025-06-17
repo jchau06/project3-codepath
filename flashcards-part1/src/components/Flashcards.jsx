@@ -6,7 +6,14 @@ const Flashcards = () => {
         { id: 1, question: 'Welcome to the Ultimate NBA Test!', answer: 'Test your knowledge of the NBA with these challenging questions.' },
         { id: 2, question: 'What NBA franchise drafted Stephen Curry?', answer: 'Golden State Warriors' },
         { id: 3, question: 'What year did Lebron James win a championship with the Cleveland Caveliers?', answer: '2016' },
-        { id: 4, question: 'How many championship rings did Michael Jordan win?', answer: '6' }
+        { id: 4, question: 'How many championship rings did Michael Jordan win?', answer: '6' },
+        { id: 5, question: 'What years did Giannis Antetokounmpo win MVP?', answer: '2019 and 2020' },
+        { id: 6, question: 'How many championships did the Boston Celtics win?', answer: '18' },
+        { id: 7, question: 'Who is the highest paid NBA player in 2025?', answer: 'Stephen Curry' },
+        { id: 8, question: 'Who did the Atlanta Hawks draft as the first pick of the 2024 NBA draft?', answer: 'Zaccharie Risacher' },
+        { id: 9, question: 'How many more rings did Magic Johnson win compared to Larry Bird?', answer: '2' },
+        { id: 10, question: 'What basketball player has the highest number of assists in the history of the NBA?', answer: 'John Stockton' },
+        { id: 11, question: 'In what year did Wilt Chamberlain score his 100-point game?', answer: '1962' },
     ]
 
     const pastIndex = useRef(0);
@@ -19,7 +26,6 @@ const Flashcards = () => {
 
     const handlePrev = () => {
         setCurrentIndex(pastIndex.current);
-        setCardSide('question');
     };
 
     const handleNext = () => {
