@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import './Flashcards.css'
 
 const Flashcards = () => {
     const flashcardsData = [
         { id: 1, question: 'Welcome to the Ultimate NBA Test!', answer: 'Test your knowledge of the NBA with these challenging questions.' },
-        { id: 2, question: '...', answer: '...' },
-        { id: 3, question: '...', answer: '...' },
-        { id: 4, question: '...', answer: '...' }
+        { id: 2, question: 'What NBA franchise drafted Stephen Curry?', answer: 'Golden State Warriors' },
+        { id: 3, question: 'What year did Lebron James win a championship with the Cleveland Caveliers?', answer: '2016' },
+        { id: 4, question: 'How many championship rings did Michael Jordan win?', answer: '6' }
     ]
 
+    const pastIndex = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [cardSide, setCardSide] = useState('question');
 
@@ -17,12 +18,17 @@ const Flashcards = () => {
     };
 
     const handlePrev = () => {
-        setCurrentIndex((prev) => Math.max(prev - 1, 0));
+        setCurrentIndex(pastIndex.current);
         setCardSide('question');
     };
 
     const handleNext = () => {
-        setCurrentIndex((prev) => Math.min(prev + 1, flashcardsData.length - 1));
+        let nextIndex;
+        do {
+            nextIndex = Math.floor(Math.random() * (flashcardsData.length - 1)) + 1;
+        } while (nextIndex === currentIndex && flashcardsData.length > 2);
+        pastIndex.current = currentIndex;
+        setCurrentIndex(nextIndex);
         setCardSide('question');
     };
 
