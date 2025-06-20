@@ -97,6 +97,16 @@
   width: 15rem; /* Adjust width as needed */
 }
 
+.input-correct {
+  outline: 2px solid #2ecc40 !important;
+  border-color: #2ecc40 !important;
+}
+
+.input-incorrect {
+  outline: 2px solid #ff4136 !important;
+  border-color: #ff4136 !important;
+}
+
 .flashcard-form button {
   font-family: 'Avenir', Arial, sans-serif;
   font-size: 1rem;

@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import './Flashcards.css'
 
 const Flashcards = () => {
@@ -30,6 +30,8 @@ const Flashcards = () => {
         };
         setCurrentIndex(prevIndex);
         setCardSide('question');
+        setGuess('');
+        setAnswerStatus('');
     };
 
     const handleNext = () => {
@@ -39,27 +41,54 @@ const Flashcards = () => {
         }
         setCurrentIndex(nextIndex);
         setCardSide('question');
+        setGuess('');
+        setAnswerStatus('');
     };
 
     const flashcard = flashcardsData[currentIndex];
 
     const [guess, setGuess] = useState('');
+    const [answerStatus, setAnswerStatus] = useState('');
+
     const handleGuessChange = (event) => {
         setGuess(event.target.value);
+        setAnswerStatus(''); 
     }
 
     const verifyAnswer = (event) => {
         event.preventDefault();
         if (guess.trim().toLowerCase() === flashcard.answer.toLowerCase()) {
-            alert('Correct!');
+            setAnswerStatus('correct');
+            updateStreak('correct');
         } else {
-            alert(`Incorrect! The correct answer is: ${flashcard.answer}`);
+            setAnswerStatus('incorrect');
+            updateStreak('incorrect');
         }
     }
+
+    const [currentStreak, setCurrentStreak] = useState(0);
+    const [longestStreak, setLongestStreak] = useState(0);
+
+    const updateStreak = (status) => {
+        if (status === 'correct') {
+            setCurrentStreak((prev) => prev + 1);
+            if (currentStreak + 1 > longestStreak) {
+                setLongestStreak(currentStreak + 1);
+            }
+        } else {
+            setCurrentStreak(0);
+        }
+    }
+
 
     
     return (
         <div className="flashcard-container">
+            <div>
+                <h3>
+                    Current Streak {currentStreak} | Longest Streak {longestStreak}
+                </h3>
+            </div>
             <div className="flashcard-body" onClick={handleFlip}>
                 <div className={`flashcard ${cardSide === 'answer' ? 'flipped' : ''}`}>
                     <div className="question-body">
@@ -78,7 +107,14 @@ const Flashcards = () => {
                         type="text" 
                         placeholder="Type your answer here..." 
                         value={guess}
-                        onChange={handleGuessChange}/>
+                        onChange={handleGuessChange}
+                        className={
+                            answerStatus === 'correct'
+                                ? 'input-correct'
+                                : answerStatus === 'incorrect'
+                                ? 'input-incorrect'
+                                : ''
+                        }/>
                     <button onClick={verifyAnswer}>Submit Guess</button>
                 </form>
              </div>
