@@ -16,7 +16,6 @@ const Flashcards = () => {
         { id: 11, question: 'In what year did Wilt Chamberlain score his 100-point game?', answer: '1962' },
     ]
 
-    const pastIndex = useRef(0);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [cardSide, setCardSide] = useState('question');
 
@@ -25,20 +24,38 @@ const Flashcards = () => {
     };
 
     const handlePrev = () => {
-        setCurrentIndex(pastIndex.current);
+        let prevIndex = currentIndex - 1;
+        if (prevIndex < 0) {
+            prevIndex = 0
+        };
+        setCurrentIndex(prevIndex);
+        setCardSide('question');
     };
 
     const handleNext = () => {
-        let nextIndex;
-        do {
-            nextIndex = Math.floor(Math.random() * (flashcardsData.length - 1)) + 1;
-        } while (nextIndex === currentIndex && flashcardsData.length > 2);
-        pastIndex.current = currentIndex;
+        let nextIndex = currentIndex + 1;
+        if (nextIndex >= flashcardsData.length) {
+            nextIndex = 0; // Loop back to the first card
+        }
         setCurrentIndex(nextIndex);
         setCardSide('question');
     };
 
     const flashcard = flashcardsData[currentIndex];
+
+    const [guess, setGuess] = useState('');
+    const handleGuessChange = (event) => {
+        setGuess(event.target.value);
+    }
+
+    const verifyAnswer = (event) => {
+        event.preventDefault();
+        if (guess.trim().toLowerCase() === flashcard.answer.toLowerCase()) {
+            alert('Correct!');
+        } else {
+            alert(`Incorrect! The correct answer is: ${flashcard.answer}`);
+        }
+    }
 
     
     return (
@@ -53,11 +70,24 @@ const Flashcards = () => {
                     </div>
                 </div>
             </div>
+
+            <div>
+                <form className="flashcard-form" onSubmit={verifyAnswer}>
+                    <h3>Guess the answer here:</h3>
+                    <input 
+                        type="text" 
+                        placeholder="Type your answer here..." 
+                        value={guess}
+                        onChange={handleGuessChange}/>
+                    <button onClick={verifyAnswer}>Submit Guess</button>
+                </form>
+             </div>
+
             <div className="flashcard-buttons">
-                <button className="prev-button" onClick={handlePrev}>
+                <button className="prev-button" onClick={handlePrev} disabled={currentIndex === 0}>
                     <h4>←</h4>
                 </button>
-                <button className="next-button" onClick={handleNext}>
+                <button className="next-button" onClick={handleNext} disabled={currentIndex === flashcardsData.length - 1}>
                     <h4>→</h4>
                 </button>
             </div>
